@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/Module3.dir/BmpProcessor.c.o CMakeFiles/Module3.dir/main.c.o CMakeFiles/Module3.dir/PixelProcessor.c.o CMakeFiles/Module3.dir/PpmProcessor.c.o  -o Module3 
