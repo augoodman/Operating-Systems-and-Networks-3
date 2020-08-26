@@ -1,10 +1,19 @@
+/**
+* File:   PpmProcessor.c
+* Process PPM images.
+*
+* @author Goodman
+* @version 2020.08.25
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "BmpProcessor.h"
 #include "PpmProcessor.h"
 #include "PixelProcessor.h"
+
+
 /**
  * read PPM header of a file. Useful for converting files from BMP to PPM.
  *
@@ -13,7 +22,7 @@
  */
 void readPPMHeader(FILE* file, struct PPM_Header* header){
 
-};
+}
 
 /**
  * write PPM header of a file. Useful for converting files from BMP to PPM.
@@ -24,7 +33,7 @@ void readPPMHeader(FILE* file, struct PPM_Header* header){
  */
 void writePPMHeader(FILE* file, struct PPM_Header* header){
 
-};
+}
 
 /**
  * make PPM header based on width and height. Useful for converting files from BMP to PPM.
@@ -35,7 +44,7 @@ void writePPMHeader(FILE* file, struct PPM_Header* header){
  */
 void makePPMHeader(struct PPM_Header* header, int width, int height){
 
-};
+}
 
 /**
  * read Pixels from PPM file based on width and height.
@@ -47,7 +56,7 @@ void makePPMHeader(struct PPM_Header* header, int width, int height){
  */
 void readPixelsPPM(FILE* file, struct Pixel** pArr, int width, int height){
 
-};
+}
 
 /**
  * write Pixels from PPM file based on width and height.
@@ -59,4 +68,4 @@ void readPixelsPPM(FILE* file, struct Pixel** pArr, int width, int height){
  */
 void writePixelsPPM(FILE* file, struct Pixel** pArr, int width, int height){
     
-};
+}

@@ -90,18 +90,18 @@ CMakeFiles/Module3.dir/BmpProcessor.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Module3.dir/BmpProcessor.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/CLionProjects/Module3/BmpProcessor.c -o CMakeFiles/Module3.dir/BmpProcessor.c.s
 
-CMakeFiles/Module3.dir/main.c.o: CMakeFiles/Module3.dir/flags.make
-CMakeFiles/Module3.dir/main.c.o: ../main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/andrew/CLionProjects/Module3/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/Module3.dir/main.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Module3.dir/main.c.o   -c /home/andrew/CLionProjects/Module3/main.c
+CMakeFiles/Module3.dir/GoodmanImageProcessor.c.o: CMakeFiles/Module3.dir/flags.make
+CMakeFiles/Module3.dir/GoodmanImageProcessor.c.o: ../GoodmanImageProcessor.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/andrew/CLionProjects/Module3/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/Module3.dir/GoodmanImageProcessor.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Module3.dir/GoodmanImageProcessor.c.o   -c /home/andrew/CLionProjects/Module3/GoodmanImageProcessor.c
 
-CMakeFiles/Module3.dir/main.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Module3.dir/main.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/CLionProjects/Module3/main.c > CMakeFiles/Module3.dir/main.c.i
+CMakeFiles/Module3.dir/GoodmanImageProcessor.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Module3.dir/GoodmanImageProcessor.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/CLionProjects/Module3/GoodmanImageProcessor.c > CMakeFiles/Module3.dir/GoodmanImageProcessor.c.i
 
-CMakeFiles/Module3.dir/main.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Module3.dir/main.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/CLionProjects/Module3/main.c -o CMakeFiles/Module3.dir/main.c.s
+CMakeFiles/Module3.dir/GoodmanImageProcessor.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Module3.dir/GoodmanImageProcessor.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/CLionProjects/Module3/GoodmanImageProcessor.c -o CMakeFiles/Module3.dir/GoodmanImageProcessor.c.s
 
 CMakeFiles/Module3.dir/PixelProcessor.c.o: CMakeFiles/Module3.dir/flags.make
 CMakeFiles/Module3.dir/PixelProcessor.c.o: ../PixelProcessor.c
@@ -129,23 +129,38 @@ CMakeFiles/Module3.dir/PpmProcessor.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Module3.dir/PpmProcessor.c.s"
 	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/CLionProjects/Module3/PpmProcessor.c -o CMakeFiles/Module3.dir/PpmProcessor.c.s
 
+CMakeFiles/Module3.dir/Util.c.o: CMakeFiles/Module3.dir/flags.make
+CMakeFiles/Module3.dir/Util.c.o: ../Util.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/andrew/CLionProjects/Module3/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/Module3.dir/Util.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/Module3.dir/Util.c.o   -c /home/andrew/CLionProjects/Module3/Util.c
+
+CMakeFiles/Module3.dir/Util.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Module3.dir/Util.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/andrew/CLionProjects/Module3/Util.c > CMakeFiles/Module3.dir/Util.c.i
+
+CMakeFiles/Module3.dir/Util.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Module3.dir/Util.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/andrew/CLionProjects/Module3/Util.c -o CMakeFiles/Module3.dir/Util.c.s
+
 # Object files for target Module3
 Module3_OBJECTS = \
 "CMakeFiles/Module3.dir/BmpProcessor.c.o" \
-"CMakeFiles/Module3.dir/main.c.o" \
+"CMakeFiles/Module3.dir/GoodmanImageProcessor.c.o" \
 "CMakeFiles/Module3.dir/PixelProcessor.c.o" \
-"CMakeFiles/Module3.dir/PpmProcessor.c.o"
+"CMakeFiles/Module3.dir/PpmProcessor.c.o" \
+"CMakeFiles/Module3.dir/Util.c.o"
 
 # External object files for target Module3
 Module3_EXTERNAL_OBJECTS =
 
 Module3: CMakeFiles/Module3.dir/BmpProcessor.c.o
-Module3: CMakeFiles/Module3.dir/main.c.o
+Module3: CMakeFiles/Module3.dir/GoodmanImageProcessor.c.o
 Module3: CMakeFiles/Module3.dir/PixelProcessor.c.o
 Module3: CMakeFiles/Module3.dir/PpmProcessor.c.o
+Module3: CMakeFiles/Module3.dir/Util.c.o
 Module3: CMakeFiles/Module3.dir/build.make
 Module3: CMakeFiles/Module3.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/andrew/CLionProjects/Module3/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable Module3"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/andrew/CLionProjects/Module3/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking C executable Module3"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Module3.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

@@ -1,13 +1,20 @@
+/**
+* File:   PixelProcessor.h
+* Header pixel RGB sample shifting.
+*
+* @author Goodman
+* @version 2020.08.25
+*/
+
 #ifndef PIXELPROCESSOR_H
 #define PIXELPROCESSOR_H
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 
-struct Pixel{
-	
-};
+typedef struct Pixel{
+    //TODO:Finish struct
+    short red;      //Red pixel sample
+    short green;    //Green pixel sample
+    short blue;     //Blue pixel sample
+}Pixel;
 
 /**
  * Shift color of Pixel array. The dimension of the array is width * height. The shift value of RGB is 

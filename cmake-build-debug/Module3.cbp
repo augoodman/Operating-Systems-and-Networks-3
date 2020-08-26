@@ -84,6 +84,9 @@
 		<Unit filename="/home/andrew/CLionProjects/Module3/BmpProcessor.h">
 			<Option target="Module3"/>
 		</Unit>
+		<Unit filename="/home/andrew/CLionProjects/Module3/GoodmanImageProcessor.c">
+			<Option target="Module3"/>
+		</Unit>
 		<Unit filename="/home/andrew/CLionProjects/Module3/PixelProcessor.c">
 			<Option target="Module3"/>
 		</Unit>
@@ -96,7 +99,10 @@
 		<Unit filename="/home/andrew/CLionProjects/Module3/PpmProcessor.h">
 			<Option target="Module3"/>
 		</Unit>
-		<Unit filename="/home/andrew/CLionProjects/Module3/main.c">
+		<Unit filename="/home/andrew/CLionProjects/Module3/Util.c">
+			<Option target="Module3"/>
+		</Unit>
+		<Unit filename="/home/andrew/CLionProjects/Module3/Util.h">
 			<Option target="Module3"/>
 		</Unit>
 		<Unit filename="/home/andrew/CLionProjects/Module3/CMakeLists.txt">

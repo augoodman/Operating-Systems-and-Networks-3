@@ -170,6 +170,33 @@ BmpProcessor.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Module3.dir/build.make CMakeFiles/Module3.dir/BmpProcessor.c.s
 .PHONY : BmpProcessor.c.s
 
+GoodmanImageProcessor.o: GoodmanImageProcessor.c.o
+
+.PHONY : GoodmanImageProcessor.o
+
+# target to build an object file
+GoodmanImageProcessor.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Module3.dir/build.make CMakeFiles/Module3.dir/GoodmanImageProcessor.c.o
+.PHONY : GoodmanImageProcessor.c.o
+
+GoodmanImageProcessor.i: GoodmanImageProcessor.c.i
+
+.PHONY : GoodmanImageProcessor.i
+
+# target to preprocess a source file
+GoodmanImageProcessor.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Module3.dir/build.make CMakeFiles/Module3.dir/GoodmanImageProcessor.c.i
+.PHONY : GoodmanImageProcessor.c.i
+
+GoodmanImageProcessor.s: GoodmanImageProcessor.c.s
+
+.PHONY : GoodmanImageProcessor.s
+
+# target to generate assembly for a file
+GoodmanImageProcessor.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Module3.dir/build.make CMakeFiles/Module3.dir/GoodmanImageProcessor.c.s
+.PHONY : GoodmanImageProcessor.c.s
+
 PixelProcessor.o: PixelProcessor.c.o
 
 .PHONY : PixelProcessor.o
@@ -224,32 +251,32 @@ PpmProcessor.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Module3.dir/build.make CMakeFiles/Module3.dir/PpmProcessor.c.s
 .PHONY : PpmProcessor.c.s
 
-main.o: main.c.o
+Util.o: Util.c.o
 
-.PHONY : main.o
+.PHONY : Util.o
 
 # target to build an object file
-main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Module3.dir/build.make CMakeFiles/Module3.dir/main.c.o
-.PHONY : main.c.o
+Util.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Module3.dir/build.make CMakeFiles/Module3.dir/Util.c.o
+.PHONY : Util.c.o
 
-main.i: main.c.i
+Util.i: Util.c.i
 
-.PHONY : main.i
+.PHONY : Util.i
 
 # target to preprocess a source file
-main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Module3.dir/build.make CMakeFiles/Module3.dir/main.c.i
-.PHONY : main.c.i
+Util.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Module3.dir/build.make CMakeFiles/Module3.dir/Util.c.i
+.PHONY : Util.c.i
 
-main.s: main.c.s
+Util.s: Util.c.s
 
-.PHONY : main.s
+.PHONY : Util.s
 
 # target to generate assembly for a file
-main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Module3.dir/build.make CMakeFiles/Module3.dir/main.c.s
-.PHONY : main.c.s
+Util.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Module3.dir/build.make CMakeFiles/Module3.dir/Util.c.s
+.PHONY : Util.c.s
 
 # Help Target
 help:
@@ -263,15 +290,18 @@ help:
 	@echo "... BmpProcessor.o"
 	@echo "... BmpProcessor.i"
 	@echo "... BmpProcessor.s"
+	@echo "... GoodmanImageProcessor.o"
+	@echo "... GoodmanImageProcessor.i"
+	@echo "... GoodmanImageProcessor.s"
 	@echo "... PixelProcessor.o"
 	@echo "... PixelProcessor.i"
 	@echo "... PixelProcessor.s"
 	@echo "... PpmProcessor.o"
 	@echo "... PpmProcessor.i"
 	@echo "... PpmProcessor.s"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... Util.o"
+	@echo "... Util.i"
+	@echo "... Util.s"
 .PHONY : help
 
 

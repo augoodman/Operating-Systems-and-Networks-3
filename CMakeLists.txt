@@ -8,8 +8,10 @@ include_directories(.)
 add_executable(Module3
         BmpProcessor.c
         BmpProcessor.h
-        main.c
+        GoodmanImageProcessor.c
         PixelProcessor.c
         PixelProcessor.h
         PpmProcessor.c
-        PpmProcessor.h)
+        PpmProcessor.h
+        Util.c
+        Util.h)

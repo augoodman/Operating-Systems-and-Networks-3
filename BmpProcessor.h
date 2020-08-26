@@ -1,22 +1,38 @@
+/**
+* File:   BmpProcessor.h
+* Header for BMP image processing.
+*
+* @author Goodman, Acuna
+* @version 2020.08.25
+*/
+
 #ifndef BMPPROCESSOR_H
 #define BMPPROCESSOR_H
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 #include "PixelProcessor.h"
 
-struct BMP_Header {
-	char signature[2];
-	int size;
-	short reserved1;
-	short reserved2;
-	int offset_pixel_array;
-};
+typedef struct BMP_Header {
+    //TODO:Finish struct
+    char signature[2];      //ID field
+    int size;               //Size of the BMP file
+    short reserved1;        //Application specific
+    short reserved2;        //Application specific
+    int offset_pixel_array; //Offset where the pixel array can be found
+}BMP_Header;
 
-struct DIB_Header{
-	//TODO:Finish struct
-};
+typedef struct DIB_Header{
+    //TODO:Finish struct
+    int size;               //Size of DIB header
+    int width;              //Width of image
+    int height;             //Height of image
+    short planes;           //Number of color planes
+    short bits_per_pixel;   //Number of bits per pixel
+    int compression;        //Compression method used
+    int image_size;         //Size of raw bitmap data
+    int x_res;              //Horizontal resolution of image
+    int y_res;              //Vertical resolution of image
+    int color_table;        //Number of colors in color table
+    int important_color;    //Number of important colors
+}DIB_Header;
 
 /**
  * read BMP header of a file. Useful for converting files from PPM to BMP.
@@ -62,13 +78,13 @@ void writeDIBHeader(FILE* file, struct DIB_Header* header);
 void makeBMPHeader(struct BMP_Header* header, int width, int height);
 
 
- /**
- * Makes new DIB header based on width and height. Useful for converting files from PPM to BMP.
- *
- * @param  header: Pointer to the destination DIB header
- * @param  width: Width of the image that this header is for
- * @param  height: Height of the image that this header is for
- */
+/**
+* Makes new DIB header based on width and height. Useful for converting files from PPM to BMP.
+*
+* @param  header: Pointer to the destination DIB header
+* @param  width: Width of the image that this header is for
+* @param  height: Height of the image that this header is for
+*/
 void makeDIBHeader(struct DIB_Header* header, int width, int height);
 
 

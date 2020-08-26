@@ -94,12 +94,12 @@ clean: CMakeFiles/Module3.dir/clean
 CMakeFiles/Module3.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Module3.dir/build.make CMakeFiles/Module3.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Module3.dir/build.make CMakeFiles/Module3.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/andrew/CLionProjects/Module3/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5 "Built target Module3"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/andrew/CLionProjects/Module3/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target Module3"
 .PHONY : CMakeFiles/Module3.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Module3.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/CLionProjects/Module3/cmake-build-debug/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/CLionProjects/Module3/cmake-build-debug/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Module3.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/andrew/CLionProjects/Module3/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/Module3.dir/rule

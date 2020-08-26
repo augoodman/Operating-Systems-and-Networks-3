@@ -5,9 +5,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
   "/home/andrew/CLionProjects/Module3/BmpProcessor.c" "/home/andrew/CLionProjects/Module3/cmake-build-debug/CMakeFiles/Module3.dir/BmpProcessor.c.o"
+  "/home/andrew/CLionProjects/Module3/GoodmanImageProcessor.c" "/home/andrew/CLionProjects/Module3/cmake-build-debug/CMakeFiles/Module3.dir/GoodmanImageProcessor.c.o"
   "/home/andrew/CLionProjects/Module3/PixelProcessor.c" "/home/andrew/CLionProjects/Module3/cmake-build-debug/CMakeFiles/Module3.dir/PixelProcessor.c.o"
   "/home/andrew/CLionProjects/Module3/PpmProcessor.c" "/home/andrew/CLionProjects/Module3/cmake-build-debug/CMakeFiles/Module3.dir/PpmProcessor.c.o"
-  "/home/andrew/CLionProjects/Module3/main.c" "/home/andrew/CLionProjects/Module3/cmake-build-debug/CMakeFiles/Module3.dir/main.c.o"
+  "/home/andrew/CLionProjects/Module3/Util.c" "/home/andrew/CLionProjects/Module3/cmake-build-debug/CMakeFiles/Module3.dir/Util.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

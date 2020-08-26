@@ -1,3 +1,11 @@
+/**
+* File:   PixelProcessor.c
+* Shift pixel RGB samples.
+*
+* @author Goodman
+* @version 2020.08.25
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -18,4 +26,4 @@
  */
 void colorShiftPixels(struct Pixel** pArr, int width, int height, int rShift, int gShift, int bShift){
 
-};
+}

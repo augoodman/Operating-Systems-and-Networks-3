@@ -1,13 +1,22 @@
+/**
+* File:   PpmProcessor.h
+* Header for PPM image processing.
+*
+* @author Goodman, Acuna
+* @version 2020.08.25
+*/
+
 #ifndef PPMPROCESSOR_H
 #define PPMPROCESSOR_H
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
+#include "PixelProcessor.h"
 
-struct PPM_Header{
-	//TODO:Finish struct
-};
+typedef struct PPM_Header{
+    //TODO:Finish struct
+    char signature[2];      //ID field
+    int width;              //Width of image
+    int height;             //Height of image
+    int max_value;          //Maximum color value
+}PPM_Header;
 
 /**
  * read PPM header of a file. Useful for converting files from BMP to PPM.
