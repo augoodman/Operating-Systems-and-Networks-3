@@ -24,4 +24,11 @@ int calcImageSize(int width, int height);
  */
 int calcPadding(int width);
 
+/**
+ * calculate decimal value for a pixel color sample.
+ *
+ * @param  b: String containing binary value to be converted
+ */
+int binaryToDecimal(char* b);
+
 #endif

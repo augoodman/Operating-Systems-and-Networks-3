@@ -12,6 +12,7 @@
 #include <unistd.h>
 #include "PpmProcessor.h"
 #include "PixelProcessor.h"
+#include "Util.h"
 
 
 /**
@@ -21,7 +22,7 @@
  * @param  header: Pointer to the destination PPM header
  */
 void readPPMHeader(FILE* file, struct PPM_Header* header){
-
+    fscanf(file, "%s %d %d %d", header->signature, &header->width, &header->height, &header->max_value);
 }
 
 /**
@@ -32,7 +33,7 @@ void readPPMHeader(FILE* file, struct PPM_Header* header){
 
  */
 void writePPMHeader(FILE* file, struct PPM_Header* header){
-
+    fprintf(file, "%s %d %d %d", header->signature, header->width, header->height, header->max_value);
 }
 
 /**
@@ -43,7 +44,10 @@ void writePPMHeader(FILE* file, struct PPM_Header* header){
  * @param  height: Height of the image that this header is for
  */
 void makePPMHeader(struct PPM_Header* header, int width, int height){
-
+    strcpy("P6", header->signature);
+    header->width = width;
+    header->height = height;
+    header->max_value = 255;
 }
 
 /**
@@ -55,7 +59,10 @@ void makePPMHeader(struct PPM_Header* header, int width, int height){
  * @param  height: Height of the image that this header is for
  */
 void readPixelsPPM(FILE* file, struct Pixel** pArr, int width, int height){
-
+    int i, j;
+    for(i = 0; i < width; i++)
+        for(j = 0; j < height; j++)
+            fread(&pArr[i][j], 1, 1, file);
 }
 
 /**
@@ -67,5 +74,8 @@ void readPixelsPPM(FILE* file, struct Pixel** pArr, int width, int height){
  * @param  height: Height of the image that this header is for
  */
 void writePixelsPPM(FILE* file, struct Pixel** pArr, int width, int height){
-    
+    int i, j;
+    for(i = 0; i < width; i++)
+        for(j = 0; j < height; j++)
+            fwrite(&pArr[i][j], 1, 1, file);
 }

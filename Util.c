@@ -25,3 +25,14 @@ int calcImageSize(int width, int height){
 int calcPadding(int width){
     return 4 - ((width * 3) % 4);
 }
+
+/**
+ * calculate decimal value for a pixel color sample.
+ *
+ * @param  b: Binary value to be converted
+ */
+int binaryToDecimal(char* b){
+    if(b == 0)
+        return 0;
+    //if(b == )
+}

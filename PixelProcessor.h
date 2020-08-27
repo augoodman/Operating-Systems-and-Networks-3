@@ -11,9 +11,9 @@
 
 typedef struct Pixel{
     //TODO:Finish struct
-    short red;      //Red pixel sample
-    short green;    //Green pixel sample
-    short blue;     //Blue pixel sample
+    int red;    //Red pixel sample
+    int green;  //Green pixel sample
+    int blue;   //Blue pixel sample
 }Pixel;
 
 /**

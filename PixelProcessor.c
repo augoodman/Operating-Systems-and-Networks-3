@@ -25,5 +25,8 @@
  * @param  bShift: the shift value of color b shift 
  */
 void colorShiftPixels(struct Pixel** pArr, int width, int height, int rShift, int gShift, int bShift){
-
+    int r, g, b;
+    r = pArr[width][height].red;
+    r += rShift;
+    pArr[width][height].red = r;
 }
