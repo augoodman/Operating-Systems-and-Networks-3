@@ -49,7 +49,7 @@ void readDIBHeader(FILE* file, struct DIB_Header* header){
     fread(&header->width, sizeof(int), 1, file);
     fread(&header->height, sizeof(int), 1, file);
     fread(&header->planes, sizeof(short), 1, file);
-    fread(&header->bits_per_pixel, sizeof(char), 1, file);
+    fread(&header->bits_per_pixel, sizeof(short), 1, file);
     fread(&header->compression, sizeof(int), 1, file);
     fread(&header->image_size, sizeof(int), 1, file);
     fread(&header->x_res, sizeof(int), 1, file);
@@ -115,10 +115,14 @@ void makeDIBHeader(struct DIB_Header* header, int width, int height){
  * @param  height: Height of the image that this header is for
  */
 void readPixelsBMP(FILE* file, struct Pixel** pArr, int width, int height){
-    int i, j;
-    for(i = 0; i < (width * 3) + calcPadding(width); i++)
-        for(j = 0; j < height; j++)
-            fread(&pArr[i][height - j], 1, 1, file);
+    int i, j, padding = calcPadding(width);
+    for(i = 0; i < height; i++)
+        for(j = 0; j < width + padding; j++)
+            if(j < width) {
+                fread(&pArr[j][i].blue, 1, 1, file);
+                fread(&pArr[j][i].green, 1, 1, file);
+                fread(&pArr[j][i].red, 1, 1, file);
+            }
 }
 
 /**

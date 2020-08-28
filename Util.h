@@ -6,6 +6,11 @@
 * @version 2020.08.25
 */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include "PixelProcessor.h"
 #ifndef UTIL_H
 #define UTIL_H
 

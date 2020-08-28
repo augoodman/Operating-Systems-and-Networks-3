@@ -31,7 +31,6 @@ void readPPMHeader(FILE* file, struct PPM_Header* header);
  *
  * @param  file: A pointer to the file being read or written
  * @param  header: The header made by makePPMHeader function
-
  */
 void writePPMHeader(FILE* file, struct PPM_Header* header);
 

@@ -29,4 +29,10 @@ void colorShiftPixels(struct Pixel** pArr, int width, int height, int rShift, in
     r = pArr[width][height].red;
     r += rShift;
     pArr[width][height].red = r;
+    g = pArr[width][height].green;
+    g += gShift;
+    pArr[width][height].green = g;
+    b = pArr[width][height].blue;
+    b += bShift;
+    pArr[width][height].blue = b;
 }
