@@ -60,9 +60,13 @@ void makePPMHeader(struct PPM_Header* header, int width, int height){
  */
 void readPixelsPPM(FILE* file, struct Pixel** pArr, int width, int height){
     int i, j;
-    for(i = 0; i < width; i++)
-        for(j = 0; j < height; j++)
-            fread(&pArr[i][j], 1, 1, file);
+    fseek(file,1,SEEK_CUR);
+    for(i = 0; i < height; i++)
+        for(j = 0; j < width; j++){
+            fread(&pArr[i][j].red, 1, 1, file);
+            fread(&pArr[i][j].green, 1, 1, file);
+            fread(&pArr[i][j].blue, 1, 1, file);
+        }
 }
 
 /**

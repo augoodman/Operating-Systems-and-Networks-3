@@ -21,7 +21,7 @@
  * @param  header: Pointer to the destination BMP header
  */
 void readBMPHeader(FILE* file, struct BMP_Header* header){
-    fread(&header->signature, sizeof(char)*2, 1, file);
+    fread(header->signature, sizeof(char)*2, 1, file);
     fread(&header->size, sizeof(int), 1, file);
     fread(&header->reserved1, sizeof(short), 1, file);
     fread(&header->reserved2, sizeof(short), 1, file);
@@ -35,7 +35,11 @@ void readBMPHeader(FILE* file, struct BMP_Header* header){
  * @param  header: The header made by makeBMPHeader function
  */
 void writeBMPHeader(FILE* file, struct BMP_Header* header){
-    fwrite(&header, sizeof(BMP_Header), 1, file);
+    fwrite(header->signature, sizeof(char)*2, 1, file);
+    fwrite(&header->size, sizeof(int), 1, file);
+    fwrite(&header->reserved1, sizeof(short), 1, file);
+    fwrite(&header->reserved2, sizeof(short), 1, file);
+    fwrite(&header->offset_pixel_array, sizeof(int), 1, file);
 }
 
 /**
@@ -65,7 +69,17 @@ void readDIBHeader(FILE* file, struct DIB_Header* header){
  * @param  header: The header made by makeDIBHeader function
  */
 void writeDIBHeader(FILE* file, struct DIB_Header* header){
-    fwrite(&header, sizeof(DIB_Header), 1, file);
+    fwrite(&header->size, sizeof(int), 1, file);
+    fwrite(&header->width, sizeof(int), 1, file);
+    fwrite(&header->height, sizeof(int), 1, file);
+    fwrite(&header->planes, sizeof(short), 1, file);
+    fwrite(&header->bits_per_pixel, sizeof(short), 1, file);
+    fwrite(&header->compression, sizeof(int), 1, file);
+    fwrite(&header->image_size, sizeof(int), 1, file);
+    fwrite(&header->x_res, sizeof(int), 1, file);
+    fwrite(&header->y_res, sizeof(int), 1, file);
+    fwrite(&header->color_table, sizeof(int), 1, file);
+    fwrite(&header->important_color, sizeof(int), 1, file);
 }
 
 /**
@@ -118,11 +132,12 @@ void readPixelsBMP(FILE* file, struct Pixel** pArr, int width, int height){
     int i, j, padding = calcPadding(width);
     for(i = 0; i < height; i++)
         for(j = 0; j < width + padding; j++)
-            if(j < width) {
+            if (j < width) {
                 fread(&pArr[j][i].blue, 1, 1, file);
                 fread(&pArr[j][i].green, 1, 1, file);
                 fread(&pArr[j][i].red, 1, 1, file);
             }
+            else fseek(file,1,SEEK_CUR);
 }
 
 /**
@@ -134,8 +149,13 @@ void readPixelsBMP(FILE* file, struct Pixel** pArr, int width, int height){
  * @param  height: Height of the image that this header is for
  */
 void writePixelsBMP(FILE* file, struct Pixel** pArr, int width, int height){
-    int i, j;
-    for(i = 0; i < (width * 3) + calcPadding(width); i++)
-        for(j = 0; j < height; j++)
-            fwrite(&pArr[i][height - j], 1, 1, file);
+    int i, j, padding = calcPadding(width);
+    for(i = 0; i < height; i++)
+        for(j = 0; j < width + padding; j++)
+            if(j < width) {
+                fwrite(&pArr[j][i].blue, 1, 1, file);
+                fwrite(&pArr[j][i].green, 1, 1, file);
+                fwrite(&pArr[j][i].red, 1, 1, file);
+            }
+            else fseek(file,1,SEEK_CUR);
 }
