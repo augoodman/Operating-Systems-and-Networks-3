@@ -59,14 +59,19 @@ void makePPMHeader(struct PPM_Header* header, int width, int height){
  * @param  height: Height of the image that this header is for
  */
 void readPixelsPPM(FILE* file, struct Pixel** pArr, int width, int height){
-    int i, j;
-    fseek(file,1,SEEK_CUR);
+    /*int i, j;
     for(i = 0; i < height; i++)
         for(j = 0; j < width; j++){
-            fread(&pArr[i][j].red, 1, 1, file);
-            fread(&pArr[i][j].green, 1, 1, file);
-            fread(&pArr[i][j].blue, 1, 1, file);
-        }
+            fread(&pArr[i][j].red, 4, 1, file);
+            fread(&pArr[i][j].green, 4, 1, file);
+            fread(&pArr[i][j].blue, 4, 1, file);
+        }*/
+    int length;
+    fseek(file, 0, SEEK_END);
+    length = ftell(file);
+    rewind(file);
+    pArr = (Pixel**)malloc(length * sizeof(char));
+    fread(pArr, length, 1, file);
 }
 
 /**
@@ -78,8 +83,12 @@ void readPixelsPPM(FILE* file, struct Pixel** pArr, int width, int height){
  * @param  height: Height of the image that this header is for
  */
 void writePixelsPPM(FILE* file, struct Pixel** pArr, int width, int height){
-    int i, j;
+    /*int i, j;
     for(i = 0; i < width; i++)
-        for(j = 0; j < height; j++)
-            fwrite(&pArr[i][j], 1, 1, file);
+        for(j = 0; j < height; j++){
+            fwrite(&pArr[j][i].red, 4, 1, file);
+            fwrite(&pArr[j][i].green, 4, 1, file);
+            fwrite(&pArr[j][i].blue, 4, 1, file);*/
+        }
+    //fwrite(&pArr, 4, 1, file);
 }

@@ -92,7 +92,8 @@ void writeDIBHeader(FILE* file, struct DIB_Header* header){
  * @param  height: Height of the image that this header is for
  */
 void makeBMPHeader(struct BMP_Header* header, int width, int height){
-    strcpy("BM", header->signature);
+    header->signature[0] = 'B';
+    header->signature[1] = 'M';
     header->size = calcImageSize(width, height) + 54;
     header->reserved1 = 0;
     header->reserved2 = 0;
@@ -151,11 +152,17 @@ void readPixelsBMP(FILE* file, struct Pixel** pArr, int width, int height){
 void writePixelsBMP(FILE* file, struct Pixel** pArr, int width, int height){
     int i, j, padding = calcPadding(width);
     for(i = 0; i < height; i++)
-        for(j = 0; j < width + padding; j++)
-            if(j < width) {
+        for(j = 0; j < width + padding; j++) {
+            if (i == height - 1 && j == width - 1) {
+                fwrite(&pArr[j][i].blue, 1, 1, file);
+                fwrite(&pArr[j][i].green, 1, 1, file);
+                fwrite(&pArr[j][i].red, 1 + padding, 1, file);
+                return;
+            }
+            if (j < width) {
                 fwrite(&pArr[j][i].blue, 1, 1, file);
                 fwrite(&pArr[j][i].green, 1, 1, file);
                 fwrite(&pArr[j][i].red, 1, 1, file);
-            }
-            else fseek(file,1,SEEK_CUR);
+            } else fseek(file, 1, SEEK_CUR);
+        }
 }

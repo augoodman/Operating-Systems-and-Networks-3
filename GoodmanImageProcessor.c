@@ -127,9 +127,6 @@ int main(int argc, char* argv[]){
     for(i = 0; i < dib_header->width; i++){
         pArr[i] = (Pixel*) malloc(dib_header->height * sizeof(Pixel));
     }
-    //printf("size of pArr: %d\n", (int)sizeof(pArr));
-    //printf("size of pixel: %d\n", (int)sizeof(pArr[0][0]));
-
     readPixelsBMP(file, pArr, dib_header->width, dib_header->height);
     int j;
     for(i = 0; i < dib_header->height; i++)
@@ -139,9 +136,8 @@ int main(int argc, char* argv[]){
             printf("pArr[%d][%d] red: %d\n", j, i, pArr[j][i].red);
         }
 
-    FILE* ppm_file = fopen("nehoymenoy.ppm", "rb");
-
     //read a ppm header from file
+    FILE* ppm_file = fopen("nehoymenoy.ppm", "rb");
     PPM_Header * ppm_header = (PPM_Header*)malloc(sizeof(PPM_Header));
     readPPMHeader(ppm_file, ppm_header);
     printf("\nsignature: %s\n", ppm_header->signature);
@@ -162,120 +158,48 @@ int main(int argc, char* argv[]){
             printf("pArrPPM blue: %d\n", pArrPPM[i][j].blue);
         }
     fclose(file);
-    fclose(ppm_file);
-    FILE* bmp_output = fopen("test3.bmp", "w");
+
     //copy test2.bmp into new file test3.bmp
+    FILE* bmp_output = fopen("test3.bmp", "w");
     writeBMPHeader(bmp_output, bmp_header);
     writeDIBHeader(bmp_output, dib_header);
     writePixelsBMP(bmp_output, pArr, dib_header->width, dib_header->height);
-    //for(i = 0; i < dib_header->width; i++){
-    //    free(pArr[i]);
-    //}
-    //free(pArr);
-    //for(i = 0; i < ppm_header->width; i++){
-    //    free(pArrPPM[i]);
-    //}
-    //free(pArrPPM);
-    //free(bmp_header);
-    //free(dib_header);
-    //free(ppm_header);
-    //fclose(file);
-    //fclose(bmp_output);
-    //BMP_Header* bmp_written = (BMP_Header*)malloc(sizeof(BMP_Header));
-    //DIB_Header* dib_written = (DIB_Header*)malloc(sizeof(DIB_Header));
-    //Pixel** pArr_written = (Pixel**)malloc(dib_header->width * 3 * sizeof(Pixel));
-    //for(i = 0; i < dib_header->width; i++){
-    //    pArr_written[i] = (Pixel*) malloc(dib_header->height);
-    //}
-    //strcpy(bmp_written->signature, "BM");
-    //bmp_written->size = calcFileSize(file);
-    //bmp_written->reserved1 = 0;
-    //bmp_written->reserved2 = 0;
-    //bmp_written->offset_pixel_array = 54;
+    fclose(bmp_output);
 
-    //printf("\nsignature: %s\n", bmp_written->signature);
-    //printf("size: %d\n", bmp_written->size);
-    //printf("reserved1: %d\n", bmp_written->reserved1);
-    //printf("reserved2: %d\n", bmp_written->reserved2);
-    //printf("offset_pixel_array: %d\n\n", bmp_written->offset_pixel_array);
+    //make bmp header from ppm
+    BMP_Header* make_bmp_header = (BMP_Header*)malloc(sizeof(BMP_Header));
+    makeBMPHeader(make_bmp_header, ppm_header->width, ppm_header->height);
+    printf("\nsignature: %c%c\n", make_bmp_header->signature[0], make_bmp_header->signature[1]);
+    printf("size: %d\n", make_bmp_header->size);
+    printf("reserved1: %d\n", make_bmp_header->reserved1);
+    printf("reserved2: %d\n", make_bmp_header->reserved2);
+    printf("offset_pixel_array: %d\n\n", make_bmp_header->offset_pixel_array);
 
-    //PPM_Header* ppm_header = (PPM_Header*)malloc(sizeof(PPM_Header));
-    //fscanf(ppm_file, "%s %d %d %d", ppm_header->signature, &ppm_header->width, &ppm_header->height, &ppm_header->max_value);
-    //fread(&ppm_header->signature, sizeof(char) * 2, 1, ppm_file);
-    //fread(&ppm_header->width, sizeof(int), 1, ppm_file);
-    //fread(&ppm_header->height, sizeof(int), 1, ppm_file);
-    //fread(&ppm_header->max_value, sizeof(int), 1, ppm_file);
-    //printf("\nsignature: %s\n", ppm_header->signature);
-    //printf("width: %d\n", ppm_header->width);
-    //printf("height: %d\n", ppm_header->height);
-    //printf("max_value: %d\n", ppm_header->max_value);
-    //Pixel** pArr = NULL;
+    //make dib header from ppm
+    DIB_Header* make_dib_header = (DIB_Header*)malloc(sizeof(DIB_Header));
+    makeDIBHeader(make_dib_header, ppm_header->width, ppm_header->height);
+    printf("size: %d\n", make_dib_header->size);
+    printf("width: %d\n", make_dib_header->width);
+    printf("height: %d\n", make_dib_header->height);
+    printf("planes: %d\n", make_dib_header->planes);
+    printf("bits_per_pixel: %d\n", make_dib_header->bits_per_pixel);
+    printf("compression: %d\n", make_dib_header->compression);
+    printf("image_size: %d\n", make_dib_header->image_size);
+    printf("x_res: %d\n", make_dib_header->x_res);
+    printf("y_res: %d\n", make_dib_header->y_res);
+    printf("color_table: %d\n", make_dib_header->color_table);
+    printf("important_color: %d\n", make_dib_header->important_color);
 
-    //readPixelsPPM(ppm_file, pArr, ppm_header->width, ppm_header->width);
-    //fseek(ppm_file,1,SEEK_CUR);
-    //fread(&pArr[0][0].red, 1, 1, ppm_file);
-    //fread(&pArr[0][0].green, 1, 1, ppm_file);
-    //fread(&pArr[0][0].blue, 1, 1, ppm_file);
-    //for(i = 0; i < 1; i++)
-        //for(j = 0; j < ppm_header->width; j++)
-            //if(j < ppm_header->width) {
-                //printf("\npArr red: %d\n", pArr[0][0].red);
-                //printf("pArr green: %d\n", pArr[0][0].green);
-                //printf("pArr blue: %d\n", pArr[0][0].blue);
-            //}
+    fclose(ppm_file);
 
-
-    //free(bmp_header);
-    //free(dib_header);
-    //for(i = 0; i < dib_header->width; i++){
-    //    free(pArr[i]);
-    //}
-    //free(pArr);
-    //free(ppm_header);
+    //copy nehoymenoy.ppm into new file test1.ppm
+    FILE* ppm_output = fopen("test1.ppm", "wb");
+    writePPMHeader(ppm_output, ppm_header);
+    writePixelsPPM(ppm_output, pArrPPM, ppm_header->width, ppm_header->height);
+    fclose(ppm_output);
 
 
 
-    /*for (; optind < argc; optind++)
-        printf("Given extra arguments: %s\n", argv[optind]);
-    int dflen;
-    if(input_file != NULL){
-        dflen = strlen(input_file);
-        if(dflen >= 5
-           && (strcmp(&input_file[dflen - 4], ".txt") == 0)
-           && (access(input_file, F_OK) != -1)
-           ){
-            printf("Importing data from %s\n\n", input_file);
-            //readFile(input_file);
-        } else {
-            printf("Data file has an invalid name or does not exist.\n");
-            //print_usage();
-            fclose(file);
-            exit(1);
-        }
-    } else {
-        printf("No data file name provided. This is a required field.\n");
-        //print_usage();
-        fclose(file);
-        exit(1);
-    }
-    int iflen;
-    int ifval;
-    if(input_file != NULL){
-        iflen = strlen(output_file);
-        if(iflen >= 5
-           && (strcmp(&output_file[iflen - 4], ".txt") == 0)
-           && (access(output_file, F_OK) != -1)
-           ){
-            printf("Performing instructions defined in %s:\n", input_file);
-            //uncomment below if doing this optional part of the assignment
-            //performInstructions(output_file);
-        } else {
-            printf("Instruction file has an invalid name or does not exist.\n");
-            //print_usage();
-            exit(1);
-        }
-    }*/
-    //fclose(file);
-    //fclose(ppm_file);
+
     return 0;
 }
