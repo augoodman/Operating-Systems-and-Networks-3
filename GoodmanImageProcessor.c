@@ -135,6 +135,7 @@ int main(int argc, char* argv[]){
             printf("pArr[%d][%d] green: %d\n", j, i, pArr[j][i].green);
             printf("pArr[%d][%d] red: %d\n", j, i, pArr[j][i].red);
         }
+    fclose(file);
 
     //read a ppm header from file
     FILE* ppm_file = fopen("nehoymenoy.ppm", "rb");
@@ -146,18 +147,12 @@ int main(int argc, char* argv[]){
     printf("max_value: %d\n", ppm_header->max_value);
 
     //read a ppm pixel array from file
-    Pixel** pArrPPM = (Pixel**)malloc(ppm_header->width * sizeof(Pixel));
+    Pixel** pArrPPM = (Pixel**)malloc(ppm_header->width * sizeof(Pixel*));
     for(i = 0; i < ppm_header->width; i++){
-        pArrPPM[i] = (Pixel*) malloc(ppm_header->height);
+        pArrPPM[i] = (Pixel*) malloc(ppm_header->height * sizeof(Pixel));
     }
     readPixelsPPM(ppm_file, pArrPPM, ppm_header->width, ppm_header->height);
-    for(i = 0; i < 1; i++)
-        for(j = 0; j < 6; j++){
-            printf("\npArrPPM red: %d\n", pArrPPM[i][j].red);
-            printf("pArrPPM green: %d\n", pArrPPM[i][j].green);
-            printf("pArrPPM blue: %d\n", pArrPPM[i][j].blue);
-        }
-    fclose(file);
+    fclose(ppm_file);
 
     //copy test2.bmp into new file test3.bmp
     FILE* bmp_output = fopen("test3.bmp", "wb");
@@ -165,6 +160,12 @@ int main(int argc, char* argv[]){
     writeDIBHeader(bmp_output, dib_header);
     writePixelsBMP(bmp_output, pArr, dib_header->width, dib_header->height);
     fclose(bmp_output);
+
+    //copy nehoymenoy.ppm into new file test1.ppm
+    FILE* ppm_output = fopen("test1.ppm", "wb");
+    writePPMHeader(ppm_output, ppm_header);
+    writePixelsPPM(ppm_output, pArrPPM, ppm_header->width, ppm_header->height);
+    fclose(ppm_output);
 
     //make bmp header from ppm
     BMP_Header* make_bmp_header = (BMP_Header*)malloc(sizeof(BMP_Header));
@@ -190,16 +191,34 @@ int main(int argc, char* argv[]){
     printf("color_table: %d\n", make_dib_header->color_table);
     printf("important_color: %d\n", make_dib_header->important_color);
 
-    fclose(ppm_file);
-
-    //copy nehoymenoy.ppm into new file test1.ppm
-    FILE* ppm_output = fopen("test1.ppm", "wb");
-    writePPMHeader(ppm_output, ppm_header);
-    writePixelsPPM(ppm_output, pArrPPM, ppm_header->width, ppm_header->height);
-    fclose(ppm_output);
-
+    //convert ppm file to bmp
+    FILE* ppm_to_bmp = fopen("test4.bmp", "wb");
+    writeBMPHeader(ppm_to_bmp, make_bmp_header);
+    writeDIBHeader(ppm_to_bmp, make_dib_header);
+    writePixelsBMP(ppm_to_bmp, pArrPPM, make_dib_header->width, make_dib_header->height);
+    fclose(ppm_to_bmp);
 
 
+
+
+
+
+
+
+
+
+
+    for(i = 0; i < dib_header->width; i++)
+        free(pArr[i]);
+    free(pArr);
+    free(bmp_header);
+    free(dib_header);
+    for(i = 0; i < ppm_header->width; i++)
+        free(pArrPPM[i]);
+    free(pArrPPM);
+    free(ppm_header);
+    free(make_bmp_header);
+    free(make_dib_header);
 
     return 0;
 }

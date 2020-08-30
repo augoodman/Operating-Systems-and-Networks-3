@@ -35,7 +35,9 @@ void readPPMHeader(FILE* file, struct PPM_Header* header){
 
  */
 void writePPMHeader(FILE* file, struct PPM_Header* header){
+    char* whitespace = " ";
     fprintf(file, "%s %d %d %d", header->signature, header->width, header->height, header->max_value);
+    fprintf(file, "%s", whitespace);
 }
 
 /**
@@ -62,8 +64,11 @@ void makePPMHeader(struct PPM_Header* header, int width, int height){
  */
 void readPixelsPPM(FILE* file, struct Pixel** pArr, int width, int height){
     int i, j;
+    fseek(file, 1, SEEK_CUR);
     for(i = 0; i < height; i++)
         for(j = 0; j < width; j++) {
+            //fscanf(file, "%c %c %c", (char*)&pArr[i][j].red, (char*)&pArr[i][j].green, (char*)&pArr[i][j].blue);
+            //fscanf(file, "%hhd %hhd %hhd", (char *)&pArr[i][j].red, (char *)&pArr[i][j].green, (char *)&pArr[i][j].blue);
             fread(&pArr[i][j].red, 1, 1, file);
             fread(&pArr[i][j].green, 1, 1, file);
             fread(&pArr[i][j].blue, 1, 1, file);
@@ -82,6 +87,7 @@ void writePixelsPPM(FILE* file, struct Pixel** pArr, int width, int height){
     int i, j;
     for(i = 0; i < height; i++)
         for(j = 0; j < width; j++) {
+            //fprintf(file, "%c %c %c", pArr[i][j].red, pArr[i][j].green, pArr[i][j].blue);
             fwrite(&pArr[i][j].red, 1, 1, file);
             fwrite(&pArr[i][j].green, 1, 1, file);
             fwrite(&pArr[i][j].blue, 1, 1, file);

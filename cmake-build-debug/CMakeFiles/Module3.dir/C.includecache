@@ -6,22 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/andrew/CLionProjects/Module3/BmpProcessor.c
-stdio.h
--
-stdlib.h
--
-string.h
--
-unistd.h
--
-BmpProcessor.h
-/home/andrew/CLionProjects/Module3/BmpProcessor.h
-PixelProcessor.h
-/home/andrew/CLionProjects/Module3/PixelProcessor.h
-Util.h
-/home/andrew/CLionProjects/Module3/Util.h
-
 /home/andrew/CLionProjects/Module3/BmpProcessor.h
 PixelProcessor.h
 /home/andrew/CLionProjects/Module3/PixelProcessor.h
@@ -39,22 +23,6 @@ PixelProcessor.h
 /home/andrew/CLionProjects/Module3/PixelProcessor.h
 Util.h
 /home/andrew/CLionProjects/Module3/Util.h
-
-/home/andrew/CLionProjects/Module3/PixelProcessor.c
-stdio.h
--
-stdlib.h
--
-string.h
--
-unistd.h
--
-BmpProcessor.h
-/home/andrew/CLionProjects/Module3/BmpProcessor.h
-PpmProcessor.h
-/home/andrew/CLionProjects/Module3/PpmProcessor.h
-PixelProcessor.h
-/home/andrew/CLionProjects/Module3/PixelProcessor.h
 
 /home/andrew/CLionProjects/Module3/PixelProcessor.h
 
@@ -77,10 +45,6 @@ Util.h
 /home/andrew/CLionProjects/Module3/PpmProcessor.h
 PixelProcessor.h
 /home/andrew/CLionProjects/Module3/PixelProcessor.h
-
-/home/andrew/CLionProjects/Module3/Util.c
-Util.h
-/home/andrew/CLionProjects/Module3/Util.h
 
 /home/andrew/CLionProjects/Module3/Util.h
 stdio.h
