@@ -11,6 +11,7 @@ CMakeFiles/Module3.dir/GoodmanImageProcessor.c.o
  /home/andrew/CLionProjects/Module3/GoodmanImageProcessor.c
  /home/andrew/CLionProjects/Module3/PixelProcessor.h
  /home/andrew/CLionProjects/Module3/PpmProcessor.h
+ /home/andrew/CLionProjects/Module3/Util.h
 CMakeFiles/Module3.dir/PixelProcessor.c.o
  /home/andrew/CLionProjects/Module3/BmpProcessor.h
  /home/andrew/CLionProjects/Module3/PixelProcessor.c
@@ -20,6 +21,8 @@ CMakeFiles/Module3.dir/PpmProcessor.c.o
  /home/andrew/CLionProjects/Module3/PixelProcessor.h
  /home/andrew/CLionProjects/Module3/PpmProcessor.c
  /home/andrew/CLionProjects/Module3/PpmProcessor.h
+ /home/andrew/CLionProjects/Module3/Util.h
 CMakeFiles/Module3.dir/Util.c.o
+ /home/andrew/CLionProjects/Module3/PixelProcessor.h
  /home/andrew/CLionProjects/Module3/Util.c
  /home/andrew/CLionProjects/Module3/Util.h

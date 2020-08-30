@@ -152,7 +152,7 @@ int main(int argc, char* argv[]){
     }
     readPixelsPPM(ppm_file, pArrPPM, ppm_header->width, ppm_header->height);
     for(i = 0; i < 1; i++)
-        for(j = 0; j < 5; j++){
+        for(j = 0; j < 6; j++){
             printf("\npArrPPM red: %d\n", pArrPPM[i][j].red);
             printf("pArrPPM green: %d\n", pArrPPM[i][j].green);
             printf("pArrPPM blue: %d\n", pArrPPM[i][j].blue);
@@ -160,7 +160,7 @@ int main(int argc, char* argv[]){
     fclose(file);
 
     //copy test2.bmp into new file test3.bmp
-    FILE* bmp_output = fopen("test3.bmp", "w");
+    FILE* bmp_output = fopen("test3.bmp", "wb");
     writeBMPHeader(bmp_output, bmp_header);
     writeDIBHeader(bmp_output, dib_header);
     writePixelsBMP(bmp_output, pArr, dib_header->width, dib_header->height);
