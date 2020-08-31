@@ -134,7 +134,7 @@ int main(int argc, char* argv[]){
         if(length >= 5
            && (strcmp(&input_file[length - 4], ".bmp") == 0)
            && (access(input_file, F_OK) != -1)){
-            printf("Importing image from %s...\n", input_file);
+            printf("Input: %s\n", input_file);
             FILE* iFile = fopen(input_file, "rb");
             //read a bmp header from file
             input_bmp_header = (BMP_Header*)malloc(sizeof(BMP_Header));
@@ -150,8 +150,6 @@ int main(int argc, char* argv[]){
             }
             readPixelsBMP(iFile, pArr, input_dib_header->width, input_dib_header->height);
             //shift pixel color
-            if((red != 0 || green != 0 || blue != 0) && oFlag != 0)
-                printf("Shifting image color...\nRed: %d\nGreen: %d\nBlue: %d\n", red, green, blue);
             colorShiftPixels(pArr, input_dib_header->width, input_dib_header->height, red, green, blue);
             fclose(iFile);
         }
@@ -159,7 +157,7 @@ int main(int argc, char* argv[]){
         else if(length >= 5
                 && (strcmp(&input_file[length - 4], ".ppm") == 0)
                 && (access(input_file, F_OK) != -1)){
-            printf("Importing image from %s...\n", input_file);
+            printf("Input: %s\n", input_file);
             //read a ppm header from file
             FILE* iFile = fopen(input_file, "rb");
             input_ppm_header = (PPM_Header*)malloc(sizeof(PPM_Header));
@@ -171,8 +169,6 @@ int main(int argc, char* argv[]){
             }
             readPixelsPPM(iFile, pArr, input_ppm_header->width, input_ppm_header->height);
             //shift pixel color
-            if((red != 0 || green != 0 || blue != 0) && oFlag != 0)
-                printf("Shifting image color...\nRed: %d\nGreen: %d\nBlue: %d\n", red, green, blue);
             colorShiftPixels(pArr, input_ppm_header->width, input_ppm_header->height, red, green, blue);
             fclose(iFile);
         }
@@ -208,7 +204,9 @@ int main(int argc, char* argv[]){
                     free(output_ppm_header);
                     free(input_bmp_header);
                     free(input_dib_header);
-                    printf("File: %s created!\n", output_file);
+                    printf("Output: %s\n", output_file);
+                    if((red != 0 || green != 0 || blue != 0) && oFlag != 0)
+                        printf("Color Shift:\nRed: %d\nGreen: %d\nBlue: %d\n", red, green, blue);
                 }
                 //otherwise copy to new ppm
                 else{
@@ -221,7 +219,9 @@ int main(int argc, char* argv[]){
                         free(pArr[i]);
                     free(pArr);
                     free(input_ppm_header);
-                    printf("File: %s created!\n", output_file);
+                    printf("Output: %s\n", output_file);
+                    if((red != 0 || green != 0 || blue != 0) && oFlag != 0)
+                        printf("Red: %d\nGreen: %d\nBlue: %d\n", red, green, blue);
                 }
             }
             //check if desired output is bmp
@@ -247,7 +247,9 @@ int main(int argc, char* argv[]){
                     free(output_bmp_header);
                     free(output_dib_header);
                     free(input_ppm_header);
-                    printf("File: %s created!\n", output_file);
+                    printf("Output: %s\n", output_file);
+                    if((red != 0 || green != 0 || blue != 0) && oFlag != 0)
+                        printf("Red: %d\nGreen: %d\nBlue: %d\n", red, green, blue);
                 }
                 //otherwise copy to new bmp
                 else{
@@ -262,7 +264,9 @@ int main(int argc, char* argv[]){
                     free(pArr);
                     free(input_bmp_header);
                     free(input_dib_header);
-                    printf("File: %s created!\n", output_file);
+                    printf("Output: %s\n", output_file);
+                    if((red != 0 || green != 0 || blue != 0) && oFlag != 0)
+                        printf("Red: %d\nGreen: %d\nBlue: %d\n", red, green, blue);
                 }
             }
             else {
@@ -295,7 +299,9 @@ int main(int argc, char* argv[]){
                 free(output_bmp_header);
                 free(output_dib_header);
                 free(input_ppm_header);
-                printf("File: %s created!\n", output_file);
+                printf("Output: %s\n", output_file);
+                if((red != 0 || green != 0 || blue != 0) && oFlag != 0)
+                    printf("Red: %d\nGreen: %d\nBlue: %d\n", red, green, blue);
             }
             //otherwise copy to new bmp
             else{
@@ -310,7 +316,9 @@ int main(int argc, char* argv[]){
                 free(pArr);
                 free(input_bmp_header);
                 free(input_dib_header);
-                printf("File: %s created!\n", output_file);
+                printf("Output: %s\n", output_file);
+                if((red != 0 || green != 0 || blue != 0) && oFlag != 0)
+                    printf("Red: %d\nGreen: %d\nBlue: %d\n", red, green, blue);
             }
         }
     }
