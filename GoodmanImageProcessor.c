@@ -202,6 +202,12 @@ int main(int argc, char* argv[]){
                     writePPMHeader(oFile, output_ppm_header);
                     writePixelsPPM(oFile, pArr, output_ppm_header->width, output_ppm_header->height);
                     fclose(oFile);
+                    for(i = 0; i < output_ppm_header->width; i++)
+                        free(pArr[i]);
+                    free(pArr);
+                    free(output_ppm_header);
+                    free(input_bmp_header);
+                    free(input_dib_header);
                     printf("File: %s created!\n", output_file);
                 }
                 //otherwise copy to new ppm
@@ -211,6 +217,10 @@ int main(int argc, char* argv[]){
                     writePPMHeader(oFile, input_ppm_header);
                     writePixelsPPM(oFile, pArr, input_ppm_header->width, input_ppm_header->height);
                     fclose(oFile);
+                    for(i = 0; i < input_ppm_header->width; i++)
+                        free(pArr[i]);
+                    free(pArr);
+                    free(input_ppm_header);
                     printf("File: %s created!\n", output_file);
                 }
             }
@@ -231,6 +241,12 @@ int main(int argc, char* argv[]){
                     writeDIBHeader(oFile, output_dib_header);
                     writePixelsBMP(oFile, pArr, output_dib_header->width, output_dib_header->height);
                     fclose(oFile);
+                    for(i = 0; i < output_dib_header->width; i++)
+                        free(pArr[i]);
+                    free(pArr);
+                    free(output_bmp_header);
+                    free(output_dib_header);
+                    free(input_ppm_header);
                     printf("File: %s created!\n", output_file);
                 }
                 //otherwise copy to new bmp
@@ -241,6 +257,11 @@ int main(int argc, char* argv[]){
                     writeDIBHeader(oFile, input_dib_header);
                     writePixelsBMP(oFile, pArr, input_dib_header->width, input_dib_header->height);
                     fclose(oFile);
+                    for(i = 0; i < input_dib_header->width; i++)
+                        free(pArr[i]);
+                    free(pArr);
+                    free(input_bmp_header);
+                    free(input_dib_header);
                     printf("File: %s created!\n", output_file);
                 }
             }
@@ -268,6 +289,12 @@ int main(int argc, char* argv[]){
                 writeDIBHeader(oFile, output_dib_header);
                 writePixelsBMP(oFile, pArr, output_dib_header->width, output_dib_header->height);
                 fclose(oFile);
+                for(i = 0; i < output_dib_header->width; i++)
+                    free(pArr[i]);
+                free(pArr);
+                free(output_bmp_header);
+                free(output_dib_header);
+                free(input_ppm_header);
                 printf("File: %s created!\n", output_file);
             }
             //otherwise copy to new bmp
@@ -278,6 +305,11 @@ int main(int argc, char* argv[]){
                 writeDIBHeader(oFile, input_dib_header);
                 writePixelsBMP(oFile, pArr, input_dib_header->width, input_dib_header->height);
                 fclose(oFile);
+                for(i = 0; i < input_dib_header->width; i++)
+                    free(pArr[i]);
+                free(pArr);
+                free(input_bmp_header);
+                free(input_dib_header);
                 printf("File: %s created!\n", output_file);
             }
         }

@@ -29,20 +29,4 @@ int calcImageSize(int width, int height);
  */
 int calcPadding(int width);
 
-/**
- * calculate size of file.
- *
- * @param  file: A pointer to the file being read or written
- */
-int calcFileSize(FILE* file);
-
-void terminate();
-
-/**
- * calculate decimal value for a pixel color sample.
- *
- * @param  b: String containing binary value to be converted
- */
-int binaryToDecimal(char* b);
-
 #endif
