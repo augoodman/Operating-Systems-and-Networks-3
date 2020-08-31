@@ -2,7 +2,7 @@
 * File:   GoodmanImageProcessor.c
 * Process images in BMP and PPM formats.
 *
-* Completion time:  20 hours
+* Completion time:  30 hours
 *
 * @author Goodman
 * @version 2020.08.25
@@ -10,8 +10,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-//#include <string.h>
-//#include <unistd.h>
+#include <string.h>
+#include <unistd.h>
 #include "BmpProcessor.h"
 #include "PpmProcessor.h"
 #include "PixelProcessor.h"
@@ -21,70 +21,104 @@
 * main
 */
 int main(int argc, char* argv[]){
-    int i, iFlag = 0, oFlag = 0, tFlag = 0, rFlag = 0, gFlag = 0, bFlag = 0;
-    printf("argc = %d\n", argc);
-    for (i = 0; i < argc; i++)
-        printf("arg[%d] = \"%s\"\n", i, argv[i]);
-    printf("\n");
+    int i, opt, length, red = 0, blue = 0, green = 0, argIndex = 0;
+    int iFlag = 0, oFlag = 0, tFlag = 0, rFlag = 0, gFlag = 0, bFlag = 0;
     char* input_file;
     char* output_file;
     char* file_type;
-    char* red;
-    char* green;
-    char* blue;
-    int opt;
+    BMP_Header* input_bmp_header;
+    DIB_Header* input_dib_header;
+    PPM_Header* input_ppm_header;
+    BMP_Header* output_bmp_header;
+    DIB_Header* output_dib_header;
+    PPM_Header* output_ppm_header;
+    Pixel** pArr;
     while((opt = getopt(argc, argv, "i:o:t:r:g:b:")) != -1)
+        //parse command line arguments
         switch(opt){
             case 'i':
+                if(argIndex != 0){
+                    printf("First argument must be for input file. Exiting\n\n");
+                    exit(1);
+                }
                 if(iFlag == 1){
-                    printf("Extra argument for input file: %s.  Argument Discarded.\n\n", optarg);
+                    printf("Extra argument for input file: %s. Additional argument discarded.\n\n", optarg);
+                    argIndex++;
                     break;
                 }
+                argIndex++;
                 iFlag = 1;
                 input_file = optarg;
                 break;
             case 'o':
+                if(argIndex == 0){
+                    printf("First argument must be for input file. Exiting\n\n");
+                    exit(1);
+                }
                 if(oFlag == 1){
-                    printf("Extra argument for input file: %s.  Argument Discarded.\n\n", optarg);
+                    printf("Extra argument for input file: %s.  Additional argument discarded.\n\n", optarg);
+                    argIndex++;
                     break;
                 }
+                argIndex++;
                 oFlag = 1;
                 output_file = optarg;
                 break;
             case 't':
+                if(argIndex == 0){
+                    printf("First argument must be for input file. Exiting\n\n");
+                    exit(1);
+                }
                 if(tFlag == 1){
-                    printf("Extra argument for file extension: .%s.  Argument Discarded.\n\n", optarg);
+                    printf("Extra argument for file extension: .%s.  Additional argument discarded.\n\n", optarg);
+                    argIndex++;
                     break;
                 }
-                if(strcmp(optarg, "bmp") != 0 && strcmp(optarg, "ppm") != 0){
-                    tFlag = 1;
-                    printf("Invalid file extension.  Default file extension of .bmp used.\n\n");
-                    file_type = optarg;
-                    break;
-                }
+                argIndex++;
                 tFlag = 1;
                 file_type = optarg;
                 break;
             case 'r':
+                if(argIndex == 0){
+                    printf("First argument must be for input file. Exiting\n\n");
+                    exit(1);
+                }
                 if(rFlag == 1){
-                    printf("Extra argument for red sample.  Argument Discarded.\n\n");
+                    printf("Extra argument for red sample.  Additional argument discarded.\n\n");
+                    argIndex++;
                     break;
                 }
+                argIndex++;
                 rFlag = 1;
-                red = optarg;
+                red = atoi(optarg);
                 break;
             case 'g':
+                if(argIndex == 0){
+                    printf("First argument must be for input file. Exiting\n\n");
+                    exit(1);
+                }
                 if(gFlag == 1){
-                    printf("Extra argument for green sample.  Argument Discarded.\n\n");
+                    printf("Extra argument for green sample.  Additional argument discarded.\n\n");
+                    argIndex++;
                     break;
                 }
+                argIndex++;
                 gFlag = 1;
-                green = optarg;
+                green = atoi(optarg);
                 break;
             case 'b':
-
+                if(argIndex == 0){
+                    printf("First argument must be for input file. Exiting\n\n");
+                    exit(1);
+                }
+                if(bFlag == 1){
+                    printf("Extra argument for blue sample.  Additional argument discarded.\n\n");
+                    argIndex++;
+                    break;
+                }
+                argIndex++;
                 bFlag = 1;
-                blue = optarg;
+                blue = atoi(optarg);
                 break;
             case ':':
                 printf("Option needs a value.\n");
@@ -93,166 +127,169 @@ int main(int argc, char* argv[]){
                 printf("Unknown option: %c.\n", optopt);
                 break;
         }
-
-    FILE* file = fopen("test2.bmp", "r");
-
-    //read a bmp header from file
-    BMP_Header* bmp_header = (BMP_Header*)malloc(sizeof(BMP_Header));
-    readBMPHeader(file, bmp_header);
-    printf("signature: %s\n", bmp_header->signature);
-    printf("size: %d\n", bmp_header->size);
-    printf("reserved1: %d\n", bmp_header->reserved1);
-    printf("reserved2: %d\n", bmp_header->reserved2);
-    printf("offset_pixel_array: %d\n\n", bmp_header->offset_pixel_array);
-
-    //read a dib header from file
-    DIB_Header* dib_header = (DIB_Header*)malloc(sizeof(DIB_Header));
-    readDIBHeader(file, dib_header);
-    printf("size: %d\n", dib_header->size);
-    printf("width: %d\n", dib_header->width);
-    printf("height: %d\n", dib_header->height);
-    printf("planes: %d\n", dib_header->planes);
-    printf("bits_per_pixel: %d\n", dib_header->bits_per_pixel);
-    printf("compression: %d\n", dib_header->compression);
-    printf("image_size: %d\n", dib_header->image_size);
-    printf("x_res: %d\n", dib_header->x_res);
-    printf("y_res: %d\n", dib_header->y_res);
-    printf("color_table: %d\n", dib_header->color_table);
-    printf("important_color: %d\n", dib_header->important_color);
-
-    //read a bmp pixel array from file
-    fseek(file, bmp_header->offset_pixel_array, SEEK_SET);
-    Pixel** pArr = (Pixel**)malloc(dib_header->width * sizeof(Pixel*));
-    for(i = 0; i < dib_header->width; i++){
-        pArr[i] = (Pixel*) malloc(dib_header->height * sizeof(Pixel));
-    }
-    readPixelsBMP(file, pArr, dib_header->width, dib_header->height);
-    int j;
-    for(i = 0; i < dib_header->height; i++)
-        for(j = 0; j < dib_header->width; j++){
-            printf("\npArr[%d][%d] blue: %d\n", j, i, pArr[j][i].blue);
-            printf("pArr[%d][%d] green: %d\n", j, i, pArr[j][i].green);
-            printf("pArr[%d][%d] red: %d\n", j, i, pArr[j][i].red);
+    //verify input file is valid
+    if(input_file != NULL){
+        length = strlen(input_file);
+        //read in bmp input file
+        if(length >= 5
+           && (strcmp(&input_file[length - 4], ".bmp") == 0)
+           && (access(input_file, F_OK) != -1)){
+            printf("Importing image from %s...\n", input_file);
+            FILE* iFile = fopen(input_file, "rb");
+            //read a bmp header from file
+            input_bmp_header = (BMP_Header*)malloc(sizeof(BMP_Header));
+            readBMPHeader(iFile, input_bmp_header);
+            //read a dib header from file
+            input_dib_header = (DIB_Header*)malloc(sizeof(DIB_Header));
+            readDIBHeader(iFile, input_dib_header);
+            //read a bmp pixel array from file
+            fseek(iFile, input_bmp_header->offset_pixel_array, SEEK_SET);
+            pArr = (Pixel**)malloc(input_dib_header->width * sizeof(Pixel*));
+            for(i = 0; i < input_dib_header->width; i++){
+                pArr[i] = (Pixel*) malloc(input_dib_header->height * sizeof(Pixel));
+            }
+            readPixelsBMP(iFile, pArr, input_dib_header->width, input_dib_header->height);
+            //shift pixel color
+            if((red != 0 || green != 0 || blue != 0) && oFlag != 0)
+                printf("Shifting image color...\nRed: %d\nGreen: %d\nBlue: %d\n", red, green, blue);
+            colorShiftPixels(pArr, input_dib_header->width, input_dib_header->height, red, green, blue);
+            fclose(iFile);
         }
-    fclose(file);
-
-    //read a ppm header from file
-    FILE* ppm_file = fopen("nehoymenoy.ppm", "rb");
-    PPM_Header * ppm_header = (PPM_Header*)malloc(sizeof(PPM_Header));
-    readPPMHeader(ppm_file, ppm_header);
-    printf("\nsignature: %s\n", ppm_header->signature);
-    printf("width: %d\n", ppm_header->width);
-    printf("height: %d\n", ppm_header->height);
-    printf("max_value: %d\n", ppm_header->max_value);
-
-    //read a ppm pixel array from file
-    Pixel** pArrPPM = (Pixel**)malloc(ppm_header->width * sizeof(Pixel*));
-    for(i = 0; i < ppm_header->width; i++){
-        pArrPPM[i] = (Pixel*) malloc(ppm_header->height * sizeof(Pixel));
+        //read in ppm input file
+        else if(length >= 5
+                && (strcmp(&input_file[length - 4], ".ppm") == 0)
+                && (access(input_file, F_OK) != -1)){
+            printf("Importing image from %s...\n", input_file);
+            //read a ppm header from file
+            FILE* iFile = fopen(input_file, "rb");
+            input_ppm_header = (PPM_Header*)malloc(sizeof(PPM_Header));
+            readPPMHeader(iFile, input_ppm_header);
+            //read a ppm pixel array from file
+            pArr = (Pixel**)malloc(input_ppm_header->width * sizeof(Pixel*));
+            for(i = 0; i < input_ppm_header->width; i++){
+                pArr[i] = (Pixel*) malloc(input_ppm_header->height * sizeof(Pixel));
+            }
+            readPixelsPPM(iFile, pArr, input_ppm_header->width, input_ppm_header->height);
+            //shift pixel color
+            if((red != 0 || green != 0 || blue != 0) && oFlag != 0)
+                printf("Shifting image color...\nRed: %d\nGreen: %d\nBlue: %d\n", red, green, blue);
+            colorShiftPixels(pArr, input_ppm_header->width, input_ppm_header->height, red, green, blue);
+            fclose(iFile);
+        }
+        else {
+            printf("Input file has an invalid name or is not accessible. Exiting.\n");
+            exit(1);
+        }
     }
-    readPixelsPPM(ppm_file, pArrPPM, ppm_header->width, ppm_header->height);
-    fclose(ppm_file);
-
-    //copy test2.bmp into new file test3.bmp
-    FILE* bmp_output = fopen("test3.bmp", "wb");
-    writeBMPHeader(bmp_output, bmp_header);
-    writeDIBHeader(bmp_output, dib_header);
-    writePixelsBMP(bmp_output, pArr, dib_header->width, dib_header->height);
-    fclose(bmp_output);
-
-    //copy nehoymenoy.ppm into new file test1.ppm
-    FILE* ppm_output = fopen("test1.ppm", "wb");
-    writePPMHeader(ppm_output, ppm_header);
-    writePixelsPPM(ppm_output, pArrPPM, ppm_header->width, ppm_header->height);
-    fclose(ppm_output);
-
-    //make bmp header from ppm
-    BMP_Header* make_bmp_header = (BMP_Header*)malloc(sizeof(BMP_Header));
-    makeBMPHeader(make_bmp_header, ppm_header->width, ppm_header->height);
-    printf("\nsignature: %c%c\n", make_bmp_header->signature[0], make_bmp_header->signature[1]);
-    printf("size: %d\n", make_bmp_header->size);
-    printf("reserved1: %d\n", make_bmp_header->reserved1);
-    printf("reserved2: %d\n", make_bmp_header->reserved2);
-    printf("offset_pixel_array: %d\n\n", make_bmp_header->offset_pixel_array);
-
-    //make dib header from ppm
-    DIB_Header* make_dib_header = (DIB_Header*)malloc(sizeof(DIB_Header));
-    makeDIBHeader(make_dib_header, ppm_header->width, ppm_header->height);
-    printf("size: %d\n", make_dib_header->size);
-    printf("width: %d\n", make_dib_header->width);
-    printf("height: %d\n", make_dib_header->height);
-    printf("planes: %d\n", make_dib_header->planes);
-    printf("bits_per_pixel: %d\n", make_dib_header->bits_per_pixel);
-    printf("compression: %d\n", make_dib_header->compression);
-    printf("image_size: %d\n", make_dib_header->image_size);
-    printf("x_res: %d\n", make_dib_header->x_res);
-    printf("y_res: %d\n", make_dib_header->y_res);
-    printf("color_table: %d\n", make_dib_header->color_table);
-    printf("important_color: %d\n", make_dib_header->important_color);
-
-    //convert ppm file to bmp
-    FILE* ppm_to_bmp = fopen("test4.bmp", "wb");
-    writeBMPHeader(ppm_to_bmp, make_bmp_header);
-    writeDIBHeader(ppm_to_bmp, make_dib_header);
-    writePixelsBMP(ppm_to_bmp, pArrPPM, make_dib_header->width, make_dib_header->height);
-    fclose(ppm_to_bmp);
-
-    FILE* last_file = fopen("ttt.bmp", "rb");
-
-    //read a bmp header from file
-    BMP_Header* last_bmp_header = (BMP_Header*)malloc(sizeof(BMP_Header));
-    readBMPHeader(last_file, bmp_header);
-
-    //read a dib header from file
-    DIB_Header* last_dib_header = (DIB_Header*)malloc(sizeof(DIB_Header));
-    readDIBHeader(last_file, last_dib_header);
-
-    //make ppm header from bmp
-    PPM_Header* make_ppm_header = (PPM_Header*)malloc(sizeof(PPM_Header));
-    makePPMHeader(make_ppm_header, last_dib_header->width, last_dib_header->height);
-    printf("\nsignature: %c%c\n", make_ppm_header->signature[0], make_ppm_header->signature[1]);
-    printf("width: %d\n", make_ppm_header->width);
-    printf("height: %d\n", make_ppm_header->height);
-    printf("max_value: %d\n", make_ppm_header->max_value);
-
-    Pixel** last_pArr = (Pixel**)malloc(make_ppm_header->width * sizeof(Pixel*));
-    for(i = 0; i < make_ppm_header->width; i++){
-        last_pArr[i] = (Pixel*) malloc(make_ppm_header->height * sizeof(Pixel));
+    else {
+        printf("No input file name provided. Exiting.\n");
+        exit(1);
     }
-    readPixelsBMP(last_file, last_pArr, make_ppm_header->width, make_ppm_header->width);
-    fclose(last_file);
+    //produce an output file
+    if(oFlag == 1){
+        //check if output file type argument used
+        if(tFlag == 1){
+            //check if desired output is ppm
+            if(strcmp(file_type, "PPM") == 0 || strcmp(file_type, "ppm") == 0){
+                //convert to ppm if necessary
+                if(strcmp(&input_file[length - 4], ".bmp") == 0){
+                    //make ppm header from bmp
+                    output_ppm_header = (PPM_Header*)malloc(sizeof(PPM_Header));
+                    makePPMHeader(output_ppm_header, input_dib_header->width, input_dib_header->height);
+                    //convert bmp to ppm
+                    strcat(output_file, ".ppm");
+                    FILE* oFile = fopen(output_file, "wb");
+                    writePPMHeader(oFile, output_ppm_header);
+                    writePixelsPPM(oFile, pArr, output_ppm_header->width, output_ppm_header->height);
+                    fclose(oFile);
+                    printf("File: %s created!\n", output_file);
+                }
+                //otherwise copy to new ppm
+                else{
+                    strcat(output_file, ".ppm");
+                    FILE* oFile = fopen(output_file, "wb");
+                    writePPMHeader(oFile, input_ppm_header);
+                    writePixelsPPM(oFile, pArr, input_ppm_header->width, input_ppm_header->height);
+                    fclose(oFile);
+                    printf("File: %s created!\n", output_file);
+                }
+            }
+            //check if desired output is bmp
+            else if(strcmp(file_type, "BMP") == 0 || strcmp(file_type, "bmp") == 0) {
+                //convert to bpm if necessary
+                if(strcmp(&input_file[length - 4], ".ppm") == 0){
+                    //make bmp header from ppm
+                    output_bmp_header = (BMP_Header*)malloc(sizeof(BMP_Header));
+                    makeBMPHeader(output_bmp_header, input_ppm_header->width, input_ppm_header->height);
+                    //make dib header from ppm
+                    output_dib_header = (DIB_Header*)malloc(sizeof(DIB_Header));
+                    makeDIBHeader(output_dib_header, input_ppm_header->width, input_ppm_header->height);
+                    //convert ppm file to bmp
+                    strcat(output_file, ".bmp");
+                    FILE* oFile = fopen(output_file, "wb");
+                    writeBMPHeader(oFile, output_bmp_header);
+                    writeDIBHeader(oFile, output_dib_header);
+                    writePixelsBMP(oFile, pArr, output_dib_header->width, output_dib_header->height);
+                    fclose(oFile);
+                    printf("File: %s created!\n", output_file);
+                }
+                //otherwise copy to new bmp
+                else{
+                    strcat(output_file, ".bmp");
+                    FILE* oFile = fopen(output_file, "wb");
+                    writeBMPHeader(oFile, input_bmp_header);
+                    writeDIBHeader(oFile, input_dib_header);
+                    writePixelsBMP(oFile, pArr, input_dib_header->width, input_dib_header->height);
+                    fclose(oFile);
+                    printf("File: %s created!\n", output_file);
+                }
+            }
+            else {
+                tFlag = 1;
+                printf("Invalid file extension.  Use only 'BMP' or 'PPM' extensions.  Exiting.\n");
+                exit(1);
+            }
+        }
+        //if no argument for output type, default to bmp
+        else{
+            printf("Defaulting to output file type of 'BMP'...\n");
+            //convert to bpm if necessary
+            if(strcmp(&input_file[length - 4], ".ppm") == 0){
+                //make bmp header from ppm
+                output_bmp_header = (BMP_Header*)malloc(sizeof(BMP_Header));
+                makeBMPHeader(output_bmp_header, input_ppm_header->width, input_ppm_header->height);
+                //make dib header from ppm
+                output_dib_header = (DIB_Header*)malloc(sizeof(DIB_Header));
+                makeDIBHeader(output_dib_header, input_ppm_header->width, input_ppm_header->height);
+                //convert ppm file to bmp
+                strcat(output_file, ".bmp");
+                FILE* oFile = fopen(output_file, "wb");
+                writeBMPHeader(oFile, output_bmp_header);
+                writeDIBHeader(oFile, output_dib_header);
+                writePixelsBMP(oFile, pArr, output_dib_header->width, output_dib_header->height);
+                fclose(oFile);
+                printf("File: %s created!\n", output_file);
+            }
+            //otherwise copy to new bmp
+            else{
+                strcat(output_file, ".bmp");
+                FILE* oFile = fopen(output_file, "wb");
+                writeBMPHeader(oFile, input_bmp_header);
+                writeDIBHeader(oFile, input_dib_header);
+                writePixelsBMP(oFile, pArr, input_dib_header->width, input_dib_header->height);
+                fclose(oFile);
+                printf("File: %s created!\n", output_file);
+            }
+        }
+    }
 
-    //convert bmp to ppm
-    FILE* bmp_to_ppm = fopen("test5.ppm", "wb");
-    writePPMHeader(bmp_to_ppm, make_ppm_header);
-    writePixelsPPM(bmp_to_ppm, last_pArr, make_ppm_header->width, make_ppm_header->height);
-    fclose(bmp_to_ppm);
+    for(i = 0; i < argc; i++){
+        if(strcmp(argv[i], "-i") == 0) {
 
-
-
-
-
-
-
-
-
-
-    for(i = 0; i < make_ppm_header->width; i++)
-        free(last_pArr[i]);
-    free(last_pArr);
-    for(i = 0; i < dib_header->width; i++)
-        free(pArr[i]);
-    free(pArr);
-    free(bmp_header);
-    free(dib_header);
-    for(i = 0; i < ppm_header->width; i++)
-        free(pArrPPM[i]);
-    free(pArrPPM);
-    free(ppm_header);
-    free(make_bmp_header);
-    free(make_dib_header);
-    free(last_dib_header);
-    free(last_bmp_header);
-    free(make_ppm_header);
+        }
+        if(strcmp(argv[i], "-o") == 0){
+            //printf("output\n");
+        }
+    }
     return 0;
 }

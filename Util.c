@@ -29,27 +29,3 @@ int calcPadding(int width){
     return padding;
 }
 
-/**
- * calculate size of file.
- *
- * @param  file: A pointer to the file being read or written
- */
-int calcFileSize(FILE* file){
-    if(file){
-        fseek(file, 0, SEEK_END);
-        long size = ftell(file);
-        fseek(file, 0, SEEK_SET);
-        return size;
-    }
-}
-
-/**
- * calculate decimal value for a pixel color sample.
- *
- * @param  b: Binary value to be converted
- */
-int binaryToDecimal(char* b){
-    if(b == 0)
-        return 0;
-    //if(b == )
-}

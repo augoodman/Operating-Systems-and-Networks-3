@@ -6,12 +6,6 @@
 * @version 2020.08.25
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include "BmpProcessor.h"
-#include "PpmProcessor.h"
 #include "PixelProcessor.h"
 /**
  * Shift color of Pixel array. The dimension of the array is width * height. The shift value of RGB is 
@@ -25,14 +19,23 @@
  * @param  bShift: the shift value of color b shift 
  */
 void colorShiftPixels(struct Pixel** pArr, int width, int height, int rShift, int gShift, int bShift){
-    int r, g, b;
-    r = pArr[width][height].red;
-    r += rShift;
-    pArr[width][height].red = r;
-    g = pArr[width][height].green;
-    g += gShift;
-    pArr[width][height].green = g;
-    b = pArr[width][height].blue;
-    b += bShift;
-    pArr[width][height].blue = b;
+    int i, j;
+    for(i = 0; i < height; i++)
+        for(j = 0; j < width; j++) {
+            pArr[i][j].red += rShift;
+            pArr[i][j].green += gShift;
+            pArr[i][j].blue += bShift;
+            if(pArr[i][j].red > 255)
+                pArr[i][j].red = 255;
+            if(pArr[i][j].red < 0)
+                pArr[i][j].red = 0;
+            if(pArr[i][j].green > 255)
+                pArr[i][j].green = 255;
+            if(pArr[i][j].green < 0)
+                pArr[i][j].green = 0;
+            if(pArr[i][j].blue > 255)
+                pArr[i][j].blue = 255;
+            if(pArr[i][j].blue < 0)
+                pArr[i][j].blue = 0;
+        }
 }

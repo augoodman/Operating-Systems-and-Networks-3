@@ -7,9 +7,6 @@
 */
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 #include "BmpProcessor.h"
 #include "PixelProcessor.h"
 #include "Util.h"
@@ -150,16 +147,18 @@ void readPixelsBMP(FILE* file, struct Pixel** pArr, int width, int height){
  * @param  height: Height of the image that this header is for
  */
 void writePixelsBMP(FILE* file, struct Pixel** pArr, int width, int height){
-    /*int i, padding = calcPadding(width);
-    for(i = 0; i < height; i++){
-        int offset = ((height - i) - 1) * width * 3;
-        fwrite(&pArr[offset], 1, 3 * width + padding, file);
-    }*/
     int i, j, padding = calcPadding(width);
+    int empty = 0;
     fseek(file, -2, SEEK_SET);
     for(i = 0; i < height; i++)
         for(j = 0; j < width + padding; j++) {
-            if (j < width) {
+            if(i == height - 1 && j == width - 1){
+                fwrite(&pArr[height - i - 1][j].blue, 1, 1, file);
+                fwrite(&pArr[height - i - 1][j].green, 1, 1, file);
+                fwrite(&pArr[height - i - 1][j].red, 1, 1, file);
+                fwrite(&empty, 1, 1, file);
+            }
+            if(j < width) {
                 fwrite(&pArr[height - i - 1][j].blue, 1, 1, file);
                 fwrite(&pArr[height - i - 1][j].green, 1, 1, file);
                 fwrite(&pArr[height - i - 1][j].red, 1, 1, file);
