@@ -94,7 +94,7 @@ void writeDIBHeader(FILE* file, struct DIB_Header* header){
 void makeBMPHeader(struct BMP_Header* header, int width, int height){
     header->signature[0] = 'B';
     header->signature[1] = 'M';
-    header->size = calcImageSize(width, height) + 54;
+    header->size = (calcImageSize(width, height) + 54);
     header->reserved1 = 0;
     header->reserved2 = 0;
     header->offset_pixel_array = 54;
@@ -134,9 +134,9 @@ void readPixelsBMP(FILE* file, struct Pixel** pArr, int width, int height){
     for(i = 0; i < height; i++)
         for(j = 0; j < width + padding; j++)
             if (j < width) {
-                fread(&pArr[j][i].blue, 1, 1, file);
-                fread(&pArr[j][i].green, 1, 1, file);
-                fread(&pArr[j][i].red, 1, 1, file);
+                fread(&pArr[height - i - 1][j].blue, 1, 1, file);
+                fread(&pArr[height - i - 1][j].green, 1, 1, file);
+                fread(&pArr[height - i - 1][j].red, 1, 1, file);
             }
             else fseek(file,1,SEEK_CUR);
 }
@@ -150,19 +150,19 @@ void readPixelsBMP(FILE* file, struct Pixel** pArr, int width, int height){
  * @param  height: Height of the image that this header is for
  */
 void writePixelsBMP(FILE* file, struct Pixel** pArr, int width, int height){
+    /*int i, padding = calcPadding(width);
+    for(i = 0; i < height; i++){
+        int offset = ((height - i) - 1) * width * 3;
+        fwrite(&pArr[offset], 1, 3 * width + padding, file);
+    }*/
     int i, j, padding = calcPadding(width);
+    fseek(file, -2, SEEK_SET);
     for(i = 0; i < height; i++)
         for(j = 0; j < width + padding; j++) {
-            if (i == height - 1 && j == width - 1) {
-                fwrite(&pArr[j][i].blue, 1, 1, file);
-                fwrite(&pArr[j][i].green, 1, 1, file);
-                fwrite(&pArr[j][i].red, 1 + padding, 1, file);
-                return;
-            }
             if (j < width) {
-                fwrite(&pArr[j][i].blue, 1, 1, file);
-                fwrite(&pArr[j][i].green, 1, 1, file);
-                fwrite(&pArr[j][i].red, 1, 1, file);
+                fwrite(&pArr[height - i - 1][j].blue, 1, 1, file);
+                fwrite(&pArr[height - i - 1][j].green, 1, 1, file);
+                fwrite(&pArr[height - i - 1][j].red, 1, 1, file);
             } else fseek(file, 1, SEEK_CUR);
         }
 }

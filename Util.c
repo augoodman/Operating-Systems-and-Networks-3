@@ -23,7 +23,10 @@ int calcImageSize(int width, int height){
  * @param  width: Number of pixels in each row of array
  */
 int calcPadding(int width){
-    return 4 - ((width * 3) % 4);
+    int padding = 4 - ((width * 3) % 4);
+    if(padding == 4)
+        return 0;
+    return padding;
 }
 
 /**

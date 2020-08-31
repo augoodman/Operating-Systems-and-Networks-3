@@ -35,8 +35,23 @@ void readPPMHeader(FILE* file, struct PPM_Header* header){
 
  */
 void writePPMHeader(FILE* file, struct PPM_Header* header){
+    //fwrite(header->signature, sizeof(char)*2, 1, file);
+    //fseek(file, 1, SEEK_CUR);
+    //fwrite(&header->width, sizeof(int), 1, file);
+    //fwrite(&header->height, sizeof(int), 1, file);
+    //fwrite(&header->max_value, sizeof(int), 1, file);
+    //fseek(file, 1, SEEK_CUR);
+
+
     char* whitespace = " ";
-    fprintf(file, "%s %d %d %d", header->signature, header->width, header->height, header->max_value);
+    fprintf(file, "%c", header->signature[0]);
+    fprintf(file, "%c", header->signature[1]);
+    fprintf(file, "%s", whitespace);
+    fprintf(file, "%d", header->width);
+    fprintf(file, "%s", whitespace);
+    fprintf(file, "%d", header->height);
+    fprintf(file, "%s", whitespace);
+    fprintf(file, "%d", header->max_value);
     fprintf(file, "%s", whitespace);
 }
 
@@ -48,7 +63,8 @@ void writePPMHeader(FILE* file, struct PPM_Header* header){
  * @param  height: Height of the image that this header is for
  */
 void makePPMHeader(struct PPM_Header* header, int width, int height){
-    strcpy("P6", header->signature);
+    header->signature[0] = 'P';
+    header->signature[1] = '6';
     header->width = width;
     header->height = height;
     header->max_value = 255;

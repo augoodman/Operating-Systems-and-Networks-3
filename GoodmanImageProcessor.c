@@ -122,8 +122,7 @@ int main(int argc, char* argv[]){
 
     //read a bmp pixel array from file
     fseek(file, bmp_header->offset_pixel_array, SEEK_SET);
-    Pixel** pArr = NULL;
-            pArr = (Pixel**)malloc(dib_header->width * sizeof(Pixel*));
+    Pixel** pArr = (Pixel**)malloc(dib_header->width * sizeof(Pixel*));
     for(i = 0; i < dib_header->width; i++){
         pArr[i] = (Pixel*) malloc(dib_header->height * sizeof(Pixel));
     }
@@ -198,6 +197,36 @@ int main(int argc, char* argv[]){
     writePixelsBMP(ppm_to_bmp, pArrPPM, make_dib_header->width, make_dib_header->height);
     fclose(ppm_to_bmp);
 
+    FILE* last_file = fopen("ttt.bmp", "rb");
+
+    //read a bmp header from file
+    BMP_Header* last_bmp_header = (BMP_Header*)malloc(sizeof(BMP_Header));
+    readBMPHeader(last_file, bmp_header);
+
+    //read a dib header from file
+    DIB_Header* last_dib_header = (DIB_Header*)malloc(sizeof(DIB_Header));
+    readDIBHeader(last_file, last_dib_header);
+
+    //make ppm header from bmp
+    PPM_Header* make_ppm_header = (PPM_Header*)malloc(sizeof(PPM_Header));
+    makePPMHeader(make_ppm_header, last_dib_header->width, last_dib_header->height);
+    printf("\nsignature: %c%c\n", make_ppm_header->signature[0], make_ppm_header->signature[1]);
+    printf("width: %d\n", make_ppm_header->width);
+    printf("height: %d\n", make_ppm_header->height);
+    printf("max_value: %d\n", make_ppm_header->max_value);
+
+    Pixel** last_pArr = (Pixel**)malloc(make_ppm_header->width * sizeof(Pixel*));
+    for(i = 0; i < make_ppm_header->width; i++){
+        last_pArr[i] = (Pixel*) malloc(make_ppm_header->height * sizeof(Pixel));
+    }
+    readPixelsBMP(last_file, last_pArr, make_ppm_header->width, make_ppm_header->width);
+    fclose(last_file);
+
+    //convert bmp to ppm
+    FILE* bmp_to_ppm = fopen("test5.ppm", "wb");
+    writePPMHeader(bmp_to_ppm, make_ppm_header);
+    writePixelsPPM(bmp_to_ppm, last_pArr, make_ppm_header->width, make_ppm_header->height);
+    fclose(bmp_to_ppm);
 
 
 
@@ -208,6 +237,9 @@ int main(int argc, char* argv[]){
 
 
 
+    for(i = 0; i < make_ppm_header->width; i++)
+        free(last_pArr[i]);
+    free(last_pArr);
     for(i = 0; i < dib_header->width; i++)
         free(pArr[i]);
     free(pArr);
@@ -219,6 +251,8 @@ int main(int argc, char* argv[]){
     free(ppm_header);
     free(make_bmp_header);
     free(make_dib_header);
-
+    free(last_dib_header);
+    free(last_bmp_header);
+    free(make_ppm_header);
     return 0;
 }
